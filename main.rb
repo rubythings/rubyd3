@@ -11,7 +11,19 @@ class Main
     @c_height = 1000
   end
 
+  def get_states_for_state_flow(flow)
+  #   return a list of states from the state machine
+  end
+  def get_state_changes_for_state_flow(flow)
+    #   return a list of state_changes from the state machine
+  end
+
+
   def result
+    # in the app we need
+    # g = Graph.new
+    # g.add_nodes(get_states_for_state_flow)
+    # g.add_edges(get_state_changes_for_state_flow)
     node1 = Node.new(1, 'draft', 'draft')
     node2 = Node.new(2, 'pending', 'setup')
     node3 = Node.new(3, 'signoff', 'retrict')

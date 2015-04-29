@@ -51,11 +51,12 @@
 }
 
 .ep {
+    padding: 1px;
     position: absolute;
     bottom: 37%;
     right: 5px;
-    width: 1em;
-    height: 1em;
+    width: 0.5em;
+    height: 0.5em;
     background-color: orange;
     cursor: pointer;
     box-shadow: 0 0 2px black;
@@ -77,3 +78,8 @@
 }
 
 path, ._jsPlumb_endpoint { cursor:pointer; }
+
+div.plumb_label {
+    padding: 2px;
+    background-color: white;
+}

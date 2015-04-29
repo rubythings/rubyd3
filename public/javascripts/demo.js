@@ -57,13 +57,13 @@ jsPlumb.ready(function () {
             anchor: "Continuous",
             allowLoopback: true
         });
-        instance.connect({ source: 'draft', target: 'pending', overlays:[[ 'Label', { label: 'setup', location: 0.25, id:'myLabel' } ]]});
-        instance.connect({ source: 'pending', target: 'signoff', overlays:[[ 'Label', { label: 'restrict', location: 0.25, id:'myLabel' } ]]});
-        instance.connect({ source: 'pending', target: 'active', overlays:[[ 'Label', { label: 'activate', location: 0.25, id:'myLabel' } ]]});
-        instance.connect({ source: 'signoff', target: 'completed', overlays:[[ 'Label', { label: 'finish', location: 0.25, id:'myLabel' } ]]});
-        instance.connect({ source: 'signoff', target: 'cancelled', overlays:[[ 'Label', { label: 'kill', location: 0.25, id:'myLabel' } ]]});
-        instance.connect({ source: 'pending', target: 'cancelled', overlays:[[ 'Label', { label: 'kill', location: 0.25, id:'myLabel' } ]]});
-        instance.connect({ source: 'draft', target: 'cancelled', overlays:[[ 'Label', { label: 'kill', location: 0.25, id:'myLabel' } ]]});
+        instance.connect({ source: 'draft', target: 'pending', overlays:[[ 'Label', { label: 'setup', cssClass: 'plumb_label' , location: 0.25, id:'myLabel' } ]]});
+        instance.connect({ source: 'pending', target: 'signoff', overlays:[[ 'Label', { label: 'restrict', location: 0.25, id:'myLabel', cssClass: 'plumb_label'  } ]]});
+        instance.connect({ source: 'pending', target: 'active', overlays:[[ 'Label', { label: 'activate', location: 0.25, id:'myLabel' , cssClass: 'plumb_label'} ]]});
+        instance.connect({ source: 'signoff', target: 'completed', overlays:[[ 'Label', { label: 'finish', location: 0.25, id:'myLabel', cssClass: 'plumb_label' } ]]});
+        instance.connect({ source: 'signoff', target: 'cancelled', overlays:[[ 'Label', { label: 'kill', location: 0.25, id:'myLabel' , cssClass: 'plumb_label'} ]]});
+        instance.connect({ source: 'pending', target: 'cancelled', overlays:[[ 'Label', { label: 'kill', location: 0.25, id:'myLabel' , cssClass: 'plumb_label'} ]]});
+        instance.connect({ source: 'draft', target: 'cancelled', overlays:[[ 'Label', { label: 'kill', location: 0.25, id:'myLabel', cssClass: 'plumb_label' } ]]});
 
     });
 
