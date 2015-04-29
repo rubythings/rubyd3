@@ -1,14 +1,14 @@
 class Graph
-  attr_accessor :calculation_finished, :last_added_id, :nodes, :edges, :connected_components_count
+  attr_accessor :calculation_finished, :last_added_id, :nodes, :edges, :connected_components_count, :scaling_factor, :center_distance, :timestep
 
   def initialize
-    @c_height =500
+    @c_height = 1000
     @center_distance = 10.0 # the distance from the middle of the screen to each border
     @scaling_factor = 1.0 # the zoom-factor (the smaller, the more surface is shown)
     @zooming = 0 # is the application zooming right now?
     @zoom_in_border = 1.0 # limit between graph and screen-border for zooming in
     @zooming_out = 0
-    @circle_diameter = 20 # the diameter of the node-circles
+    @circle_diameter = 2 # the diameter of the node-circles
     @timestep = 0
     @thermal_energie = 0.0 # set this to 0.3 or 0.0 to (de)activate thermal_energie
     @all_energies = [] # list of all energies sorted by time
@@ -36,14 +36,14 @@ class Graph
     @random = Random.new
   end
 
-  def addNode(node_id)
+  def addNode(node)
     # adds a node to the graph
-    return if node_id == @last_added_id # speed up adding of same ids consecutively
+    return if node.id == @last_added_id # speed up adding of same ids consecutively
     @nodes.each do |x|
-      return if x.getId() == node_id
+      return if x.getId() == node.id
     end
-    @nodes << Node.new(node_id)
-    @last_added_id = node_id
+    @nodes << Node.new(node.id, node.name, node.transition)
+    @last_added_id = node.id
   end
 
   def addEdge(node_id_1, node_id_2)
@@ -141,10 +141,12 @@ class Graph
     # calculate the repulsive force for each node
     @nodes.each do |node|
       node.force_coulomb = [0, 0]
-      nodes.each do |node2|
+      @nodes.each do |node2|
         if (node.id != node2.id) and (node.cc_number == node2.cc_number)
           distance_x = node.coordinate_x - node2.coordinate_x
           distance_y = node.coordinate_y - node2.coordinate_y
+          p distance_x
+          p distance_y
           radius = Math.sqrt(distance_x*distance_x + distance_y*distance_y)
           if radius != 0
             vector = [distance_x/radius, distance_y/radius]
@@ -169,6 +171,7 @@ class Graph
         distance_x = node.coordinate_x - node2.coordinate_x
         distance_y = node.coordinate_y - node2.coordinate_y
         radius = Math.sqrt(distance_x*distance_x + distance_y*distance_y)
+        p radius
         if radius != 0
           vector = [distance_x/radius* -1, distance_y/radius * -1]
           force_harmonic_x = vector[0] *radius*radius/100
@@ -184,7 +187,6 @@ class Graph
         new_overall_energie += radius*radius/100
       end
     end
-
     # calculate the difference between the old and new overall energie
     @overall_energie_difference = @overall_energie - new_overall_energie
     @overall_energie = new_overall_energie
@@ -192,11 +194,14 @@ class Graph
     if @overall_energie > @highest_energy
       @highest_energy = @overall_energie
     end
-    unless @dont_finish_calculating
+
+      p @overall_energie_difference
+      p @energie_change_limit.to_f
       if (@overall_energie_difference < @energie_change_limit and @overall_energie_difference > -1*@energie_change_limit)
+
         @calculation_finished = 1
 
-      end
+
     end
 
     # set the new position influenced by the force
@@ -317,10 +322,10 @@ class Graph
 
       # calculate the center of the graph and position all nodes new, so that
       # the center becomes (0,0)
-      x_max = -1000
-      x_min = 1000
-      y_max = -1000
-      y_min = 1000
+      x_max = -500
+      x_min = 500
+      y_max = -500
+      y_min = 500
       @nodes.each do |node|
         if node.coordinate_x < x_min
           x_min = node.coordinate_x
@@ -339,10 +344,11 @@ class Graph
         @nodes.each do |node|
           if node.id != @grabed_node
             node.coordinate_x -= center_x
-          end
           node.coordinate_y -= center_y
-          scale = 0
+            end
+
         end
+        scale = 0
       end
 
       # prevent nodes from leaving the screen - ZOOM OUT
@@ -387,13 +393,8 @@ class Graph
     node_ids_to_process = []
     connected_component_number = 0
     while all_node_ids.size > 0
-      p "all nodes"
-      p all_node_ids
       # take an anchor node
       node_ids_to_process << all_node_ids.pop
-
-      p 'to process'
-      p node_ids_to_process
       # process all nodes that are reachable from the anchor-node
       while node_ids_to_process.size > 0
         anchor_node_id = node_ids_to_process.pop
@@ -404,15 +405,12 @@ class Graph
         anchor_node.neighbour_ids.each do |neighbor_node_id|
           unless visited_node_ids.include?(neighbor_node_id)
             node_ids_to_process << neighbor_node_id
-
             if all_node_ids.include? neighbor_node_id
               all_node_ids.delete_if { |x| x==neighbor_node_id }
             end
           end
           # this node is finished
           visited_node_ids << anchor_node_id
-          p 'visited'
-          p visited_node_ids
         end
       end
     end

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>jsPlumb 1.7.5 demo </title>
+
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/stylesheets/jsplumb.css">
+    <link rel="stylesheet" href="public/stylesheets/demo.css">
+</head>
+
+<body data-demo-id="statemachine" data-library="dom">
+
+
+<div id="main">
+    <!-- demo.css -->
+    <div class="demo statemachine-demo" id="statemachine-demo">
+        <div class="w" id="draft">Draft
+            <div class="ep"></div>
+        </div>
+        <div class="w" id="signoff">Signoff
+            <div class="ep"></div>
+        </div>
+        <div class="w" id="pending">Pending
+            <div class="ep"></div>
+        </div>
+        <div class="w" id="active">Active
+            <div class="ep"></div>
+        </div>
+        <div class="w" id="completed">Completed
+            <div class="ep"></div>
+        </div>
+        <div class="w" id="cancelled">Cancelled
+            <div class="ep"></div>
+        </div>
+    </div>
+    <!-- /demo.css -->
+</div>
+
+
+
+<script src="public/javascripts/jsplumb.js"></script>
+
+<script src="public/javascripts/demo.js"></script>
+
+
+<style>
+
+    #draft {left: 47em; top: 38em;} #pending {left: 34em; top: 39em;} #signoff {left: 22em; top: 52em;} #active {left: 31em; top: 26em;} #completed {left: 9em; top: 51em;} #cancelled {left: 18em; top: 65em;}
+    /*#draft {*/
+        /*left: 10em;*/
+        /*top: 5em;*/
+    /*}*/
+
+    /*#pending {*/
+        /*left: 35em;*/
+        /*top: 12em;*/
+        /*width: 7em;*/
+    /*}*/
+
+    /*#signoff {*/
+        /*left: 12em;*/
+        /*top: 23em;*/
+    /*}*/
+
+    /*#active {*/
+        /*left: 28em;*/
+        /*top: 24em;*/
+    /*}*/
+
+    /*#cancelled {*/
+        /*left: 10em;*/
+        /*top: 35em;}*/
+</style>
+
+</body>
+</html>

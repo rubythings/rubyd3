@@ -3,9 +3,12 @@ attr_accessor :force_coulomb
 attr_accessor :force_harmonic
 attr_accessor :velocity
 attr_accessor :id
-attr_accessor :cc_number, :coordinate_x, :coordinate_y, :neighbour_ids, :movable
+attr_accessor :cc_number, :coordinate_x, :coordinate_y, :neighbour_ids, :movable, :name, :transition
 
-  def initialize(node_id)
+
+  def initialize(node_id, name, transition)
+    @name = name
+    @transition = transition
     @id = node_id # id (as an integer for example)
     @neighbour_ids = [] # list of the ids of the neighbours
     @degree = 0 # number of neighbours
